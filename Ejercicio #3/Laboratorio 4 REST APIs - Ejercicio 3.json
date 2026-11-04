@@ -1,0 +1,127 @@
+{
+  "info": {
+    "name": "Laboratorio 4 REST APIs - Ejercicio 3",
+    "description": null,
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Ejercicio 3 - a - GraphQL",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "description": "",
+        "url": {
+          "raw": "https://countries.trevorblades.com/graphql",
+          "protocol": "https",
+          "host": [
+            "countries",
+            "trevorblades",
+            "com"
+          ],
+          "path": [
+            "graphql"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "{\n    country(code: \"CO\") {\n        name\n        capital\n        currency\n        languages {\n            name\n        }\n    }\n}",
+            "variables": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "Ejercicio 3 - a - REST",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "rc_live_6404cfb969674bbcabd201cb7103b3b4",
+              "type": "string"
+            }
+          ]
+        },
+        "description": "",
+        "url": {
+          "raw": "https://api.restcountries.com/countries/v5/codes.alpha_2/CO",
+          "protocol": "https",
+          "host": [
+            "api",
+            "restcountries",
+            "com"
+          ],
+          "path": [
+            "countries",
+            "v5",
+            "codes.alpha_2",
+            "CO"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "Ejercicio 3 - b",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "description": "",
+        "url": {
+          "raw": "https://www.dataaccess.com/webservicesserver/NumberConversion.wso",
+          "protocol": "https",
+          "host": [
+            "www",
+            "dataaccess",
+            "com"
+          ],
+          "path": [
+            "webservicesserver",
+            "NumberConversion.wso"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap:Body>\n    <NumberToWords xmlns=\"http://www.dataaccess.com/webservicesserver/\">\n      <ubiNum>2</ubiNum>\n    </NumberToWords>\n  </soap:Body>\n</soap:Envelope>",
+          "options": {
+            "raw": {
+              "language": "xml"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Ejercicio 3 - d",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "description": "",
+        "url": {
+          "raw": "https://webhook.site/0395592a-fd23-43d4-b519-4f760c9c011c",
+          "protocol": "https",
+          "host": [
+            "webhook",
+            "site"
+          ],
+          "path": [
+            "0395592a-fd23-43d4-b519-4f760c9c011c"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    }
+  ],
+  "variable": []
+}
