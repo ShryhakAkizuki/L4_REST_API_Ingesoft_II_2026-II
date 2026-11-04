@@ -23,9 +23,32 @@ Entrega del Laboratorio 4 del curso **Ingeniería de software II** (2026-II).
 
 ## Ejercicio 2 — Ejecución
 
+### Uso de la API Rest Countries
+
+Para acceder a [Rest Countries](https://restcountries.com/) es necesario tener una API key. Se puede obtener una llave gratis [al crear una cuenta](https://restcountries.com/apis/countries). 
+
+El proyecto usa la variable de entorno `REST_COUNTRIES_API_KEY` para guardar esta llave. Una vez se obtiene una llave, puede guardarse  usando uno de los siguientes comandos
+
+#### PowerShell
+```PowerShell
+$env:REST_COUNTRIES_API_KEY = "your_actual_api_key"
+``` 
+#### Linux 
+```Bash
+export REST_COUNTRIES_API_KEY="your_actual_api_key"
+```
+#### Hardcoded (no recomendado)
+Puedes guardar la llave directamente en la variable `apiKey` del archivo [`RestCountriesPaisRepository`](Ejercicio2/src/main/java/com/example/api/RestCountriesPaisRepository.java)
+
+### Ejecución
 Requisitos: JDK 21 y Maven.
 
-```bash
-cd Ejercicio2
-mvn compile exec:java
+Para compilar y ejecutar el archivo `Main.java`:
+
+``` Bash
+mvn clean compile exec:java
+```
+Para ejecutar pruebas:
+``` Bash
+mvn test
 ```
