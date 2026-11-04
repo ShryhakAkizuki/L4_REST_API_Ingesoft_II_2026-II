@@ -2,6 +2,11 @@ package com.example;
 
 import java.util.Locale;
 
+import com.example.domain.repository.*;
+import com.example.domain.model.*;
+import com.example.api.*;
+import com.example.exception.*;
+
 public class Main {
 
     public static void main(String[] args) {

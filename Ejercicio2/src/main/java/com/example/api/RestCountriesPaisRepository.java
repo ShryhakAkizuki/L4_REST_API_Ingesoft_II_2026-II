@@ -1,17 +1,18 @@
-package com.example;
+package com.example.api;
 
 import java.io.IOException;
 import java.net.URI;
 import java.time.Duration;
-
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import com.google.gson.JsonArray;
+
+import com.example.domain.repository.PaisRepository;
+import com.example.domain.model.Pais;
+import com.example.exception.PaisNoDisponible;
 
 public class RestCountriesPaisRepository implements PaisRepository{
 

@@ -6,6 +6,11 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.example.domain.repository.*;
+import com.example.domain.model.*;
+import com.example.exception.*;
+import com.example.api.*;
+
 public class AppTest {
 
     @Test

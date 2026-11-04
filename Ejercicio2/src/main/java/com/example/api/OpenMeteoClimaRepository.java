@@ -1,4 +1,4 @@
-package com.example;
+package com.example.api;
 
 import java.io.IOException;
 import java.net.URI;
@@ -10,6 +10,10 @@ import java.net.http.HttpResponse;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import com.example.domain.repository.ClimaRepository;
+import com.example.domain.model.Clima;
+import com.example.exception.ClimaNoDisponible;
 
 public class OpenMeteoClimaRepository implements ClimaRepository {
     private static final String URL = "https://api.open-meteo.com/v1/forecast?latitude=%s&longitude=%s" + "&current=temperature_2m,wind_speed_10m";
