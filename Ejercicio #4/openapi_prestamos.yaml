@@ -1,0 +1,423 @@
+
+openapi: 3.0.3
+
+info:
+  title: API de Prestamos de Equipos de Laboratorio
+  description: >
+    API REST para consultar equipos, solicitar prestamos,
+    aprobar solicitudes, renovar prestamos y registrar
+    devoluciones y multas.
+  version: 1.0.0
+
+servers:
+  - url: https://api.ejemplo.edu.co/api/v1
+    description: Servidor de desarrollo
+
+tags:
+  - name: Equipos
+    description: Gestion de equipos
+  - name: Prestamos
+    description: Gestion de prestamos
+  - name: Renovaciones
+    description: Renovacion de prestamos
+  - name: Devoluciones
+    description: Devolucion de equipos
+  - name: Multas
+    description: Gestion de multas
+
+paths:
+
+  /equipos:
+    get:
+      tags:
+        - Equipos
+      summary: Consultar equipos disponibles
+      parameters:
+        - name: estado
+          in: query
+          schema:
+            type: string
+            enum: [disponible, prestado, mantenimiento]
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: Lista de equipos
+          content:
+            application/json:
+              example:
+                - id: 5
+                  nombre: Portatil Lenovo
+                  tipo: portatil
+                  estado: disponible
+                  serial: LEN-001
+        '400':
+          description: Parametros invalidos
+
+  /equipos/{equipoId}:
+    get:
+      tags:
+        - Equipos
+      summary: Consultar un equipo
+      parameters:
+        - name: equipoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Equipo encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipo'
+        '404':
+          description: Equipo no encontrado
+
+  /prestamos:
+    get:
+      tags:
+        - Prestamos
+      summary: Consultar prestamos
+      parameters:
+        - name: estado
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: Lista de prestamos
+          content:
+            application/json:
+              example:
+                - id: 15
+                  estudianteId: 1
+                  equipoId: 5
+                  estado: aprobado
+
+    post:
+      tags:
+        - Prestamos
+      summary: Crear solicitud de prestamo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NuevoPrestamo'
+            example:
+              estudianteId: 1
+              equipoId: 5
+              fechaInicio: '2026-11-05'
+              fechaFin: '2026-11-10'
+      responses:
+        '201':
+          description: Solicitud creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prestamo'
+              example:
+                id: 15
+                estudianteId: 1
+                equipoId: 5
+                estado: pendiente
+                fechaInicio: '2026-11-05'
+                fechaFin: '2026-11-10'
+                renovaciones: 0
+        '400':
+          description: Datos invalidos
+        '404':
+          description: Estudiante o equipo inexistente
+        '409':
+          description: Equipo no disponible
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                type: https://laboratorio.edu/errors/equipo-no-disponible
+                title: Equipo no disponible
+                status: 409
+                detail: El equipo 5 ya esta prestado.
+
+  /prestamos/{prestamoId}:
+    get:
+      tags:
+        - Prestamos
+      summary: Consultar un prestamo
+      parameters:
+        - name: prestamoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Prestamo encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prestamo'
+        '404':
+          description: Prestamo no encontrado
+
+  /prestamos/{prestamoId}/aprobaciones:
+    post:
+      tags:
+        - Prestamos
+      summary: Registrar decision del monitor
+      parameters:
+        - name: prestamoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Aprobacion'
+            example:
+              decision: aprobado
+              observacion: Solicitud autorizada
+      responses:
+        '201':
+          description: Decision registrada
+        '400':
+          description: Decision invalida
+        '404':
+          description: Prestamo inexistente
+        '409':
+          description: Solicitud ya fue procesada
+
+  /prestamos/{prestamoId}/renovaciones:
+    post:
+      tags:
+        - Renovaciones
+      summary: Solicitar renovacion
+      parameters:
+        - name: prestamoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Renovacion'
+            example:
+              nuevaFechaFin: '2026-11-15'
+      responses:
+        '201':
+          description: Renovacion registrada
+          content:
+            application/json:
+              example:
+                id: 3
+                prestamoId: 15
+                nuevaFechaFin: '2026-11-15'
+        '400':
+          description: Fecha invalida
+        '404':
+          description: Prestamo inexistente
+        '409':
+          description: El prestamo ya fue renovado
+
+  /prestamos/{prestamoId}/devoluciones:
+    post:
+      tags:
+        - Devoluciones
+      summary: Registrar devolucion
+      parameters:
+        - name: prestamoId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Devolucion'
+            example:
+              fechaDevolucion: '2026-11-15'
+              estadoEquipo: bueno
+      responses:
+        '201':
+          description: Devolucion registrada
+        '400':
+          description: Datos invalidos
+        '404':
+          description: Prestamo inexistente
+        '409':
+          description: El prestamo ya fue devuelto
+
+  /multas:
+    get:
+      tags:
+        - Multas
+      summary: Consultar multas
+      responses:
+        '200':
+          description: Lista de multas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Multa'
+
+components:
+  schemas:
+
+    Equipo:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        nombre:
+          type: string
+          example: Portatil Lenovo
+        tipo:
+          type: string
+          example: portatil
+        estado:
+          type: string
+          enum: [disponible, prestado, mantenimiento]
+        serial:
+          type: string
+          example: LEN-001
+
+    NuevoPrestamo:
+      type: object
+      required:
+        - estudianteId
+        - equipoId
+        - fechaInicio
+        - fechaFin
+      properties:
+        estudianteId:
+          type: integer
+        equipoId:
+          type: integer
+        fechaInicio:
+          type: string
+          format: date
+        fechaFin:
+          type: string
+          format: date
+
+    Prestamo:
+      type: object
+      properties:
+        id:
+          type: integer
+        estudianteId:
+          type: integer
+        equipoId:
+          type: integer
+        estado:
+          type: string
+          enum: [pendiente, aprobado, rechazado, devuelto]
+        fechaInicio:
+          type: string
+          format: date
+        fechaFin:
+          type: string
+          format: date
+        renovaciones:
+          type: integer
+          maximum: 1
+
+    Aprobacion:
+      type: object
+      required:
+        - decision
+      properties:
+        decision:
+          type: string
+          enum: [aprobado, rechazado]
+        observacion:
+          type: string
+
+    Renovacion:
+      type: object
+      required:
+        - nuevaFechaFin
+      properties:
+        nuevaFechaFin:
+          type: string
+          format: date
+
+    Devolucion:
+      type: object
+      required:
+        - fechaDevolucion
+        - estadoEquipo
+      properties:
+        fechaDevolucion:
+          type: string
+          format: date
+        estadoEquipo:
+          type: string
+          enum: [bueno, danado]
+
+    Multa:
+      type: object
+      properties:
+        id:
+          type: integer
+        prestamoId:
+          type: integer
+        valor:
+          type: number
+          format: double
+        motivo:
+          type: string
+          example: Devolucion tardia
+        estado:
+          type: string
+          enum: [pendiente, pagada]
+
+    Error:
+      type: object
+      required:
+        - type
+        - title
+        - status
+        - detail
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string

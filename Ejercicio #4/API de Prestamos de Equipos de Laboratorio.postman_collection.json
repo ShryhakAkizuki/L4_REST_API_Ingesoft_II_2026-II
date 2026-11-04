@@ -1,0 +1,1390 @@
+{
+  "info": {
+    "_postman_id": "33f26090-4447-4ab3-bc16-9ee075068b92",
+    "name": "API de Prestamos de Equipos de Laboratorio",
+    "description": "API REST para consultar equipos, solicitar prestamos, aprobar solicitudes, renovar prestamos y registrar devoluciones y multas.\n",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59390624",
+    "_collection_link": "https://go.postman.co/collection/59390624-33f26090-4447-4ab3-bc16-9ee075068b92?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "equipos",
+      "item": [
+        {
+          "name": "{equipoId}",
+          "item": [
+            {
+              "name": "Consultar un equipo",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/equipos/:equipoId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "equipos",
+                    ":equipoId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "equipoId",
+                      "value": "7791"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Equipo encontrado",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/equipos/:equipoId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "equipos",
+                        ":equipoId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "equipoId",
+                          "value": "7791"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 5,\n  \"nombre\": \"Portatil Lenovo\",\n  \"tipo\": \"portatil\",\n  \"estado\": \"mantenimiento\",\n  \"serial\": \"LEN-001\"\n}"
+                },
+                {
+                  "name": "Equipo no encontrado",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/equipos/:equipoId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "equipos",
+                        ":equipoId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "equipoId",
+                          "value": "7791"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Consultar equipos disponibles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/equipos?estado=mantenimiento&page=1&size=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "equipos"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "mantenimiento"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Lista de equipos",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/equipos?estado=mantenimiento&page=1&size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "equipos"
+                  ],
+                  "query": [
+                    {
+                      "key": "estado",
+                      "value": "mantenimiento"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 5,\n    \"nombre\": \"Portatil Lenovo\",\n    \"tipo\": \"portatil\",\n    \"estado\": \"disponible\",\n    \"serial\": \"LEN-001\"\n  }\n]"
+            },
+            {
+              "name": "Parametros invalidos",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/equipos?estado=mantenimiento&page=1&size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "equipos"
+                  ],
+                  "query": [
+                    {
+                      "key": "estado",
+                      "value": "mantenimiento"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "prestamos",
+      "item": [
+        {
+          "name": "{prestamoId}",
+          "item": [
+            {
+              "name": "aprobaciones",
+              "item": [
+                {
+                  "name": "Registrar decision del monitor",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"decision\": \"aprobado\",\n  \"observacion\": \"Solicitud autorizada\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/prestamos/:prestamoId/aprobaciones",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "prestamos",
+                        ":prestamoId",
+                        "aprobaciones"
+                      ],
+                      "variable": [
+                        {
+                          "key": "prestamoId",
+                          "value": "7791"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Decision registrada",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"decision\": \"aprobado\",\n  \"observacion\": \"Solicitud autorizada\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/aprobaciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "aprobaciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    },
+                    {
+                      "name": "Decision invalida",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"decision\": \"aprobado\",\n  \"observacion\": \"Solicitud autorizada\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/aprobaciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "aprobaciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    },
+                    {
+                      "name": "Prestamo inexistente",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"decision\": \"aprobado\",\n  \"observacion\": \"Solicitud autorizada\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/aprobaciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "aprobaciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    },
+                    {
+                      "name": "Solicitud ya fue procesada",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"decision\": \"aprobado\",\n  \"observacion\": \"Solicitud autorizada\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/aprobaciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "aprobaciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "renovaciones",
+              "item": [
+                {
+                  "name": "Solicitar renovacion",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"nuevaFechaFin\": \"2026-11-15\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/prestamos/:prestamoId/renovaciones",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "prestamos",
+                        ":prestamoId",
+                        "renovaciones"
+                      ],
+                      "variable": [
+                        {
+                          "key": "prestamoId",
+                          "value": "7791"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Renovacion registrada",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"nuevaFechaFin\": \"2026-11-15\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/renovaciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "renovaciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"id\": 3,\n  \"prestamoId\": 15,\n  \"nuevaFechaFin\": \"2026-11-15\"\n}"
+                    },
+                    {
+                      "name": "Fecha invalida",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"nuevaFechaFin\": \"2026-11-15\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/renovaciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "renovaciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    },
+                    {
+                      "name": "Prestamo inexistente",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"nuevaFechaFin\": \"2026-11-15\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/renovaciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "renovaciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    },
+                    {
+                      "name": "El prestamo ya fue renovado",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"nuevaFechaFin\": \"2026-11-15\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/renovaciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "renovaciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "devoluciones",
+              "item": [
+                {
+                  "name": "Registrar devolucion",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"fechaDevolucion\": \"2026-11-15\",\n  \"estadoEquipo\": \"bueno\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/prestamos/:prestamoId/devoluciones",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "prestamos",
+                        ":prestamoId",
+                        "devoluciones"
+                      ],
+                      "variable": [
+                        {
+                          "key": "prestamoId",
+                          "value": "7791"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Devolucion registrada",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fechaDevolucion\": \"2026-11-15\",\n  \"estadoEquipo\": \"bueno\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/devoluciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "devoluciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    },
+                    {
+                      "name": "Datos invalidos",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fechaDevolucion\": \"2026-11-15\",\n  \"estadoEquipo\": \"bueno\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/devoluciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "devoluciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    },
+                    {
+                      "name": "Prestamo inexistente",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fechaDevolucion\": \"2026-11-15\",\n  \"estadoEquipo\": \"bueno\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/devoluciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "devoluciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    },
+                    {
+                      "name": "El prestamo ya fue devuelto",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fechaDevolucion\": \"2026-11-15\",\n  \"estadoEquipo\": \"bueno\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/prestamos/:prestamoId/devoluciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "prestamos",
+                            ":prestamoId",
+                            "devoluciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "prestamoId",
+                              "value": "7791"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Consultar un prestamo",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/prestamos/:prestamoId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prestamos",
+                    ":prestamoId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "prestamoId",
+                      "value": "7791"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Prestamo encontrado",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/prestamos/:prestamoId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "prestamos",
+                        ":prestamoId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "prestamoId",
+                          "value": "7791"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1626,\n  \"estudianteId\": 534,\n  \"equipoId\": 1518,\n  \"estado\": \"rechazado\",\n  \"fechaInicio\": \"1949-05-18\",\n  \"fechaFin\": \"2005-04-04\",\n  \"renovaciones\": 0\n}"
+                },
+                {
+                  "name": "Prestamo no encontrado",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/prestamos/:prestamoId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "prestamos",
+                        ":prestamoId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "prestamoId",
+                          "value": "7791"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Consultar prestamos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/prestamos?estado=string&page=1&size=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "prestamos"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "string"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Lista de prestamos",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/prestamos?estado=string&page=1&size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prestamos"
+                  ],
+                  "query": [
+                    {
+                      "key": "estado",
+                      "value": "string"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 15,\n    \"estudianteId\": 1,\n    \"equipoId\": 5,\n    \"estado\": \"aprobado\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Crear solicitud de prestamo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estudianteId\": 1,\n  \"equipoId\": 5,\n  \"fechaInicio\": \"2026-11-05\",\n  \"fechaFin\": \"2026-11-10\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/prestamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "prestamos"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Solicitud creada",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"estudianteId\": 1,\n  \"equipoId\": 5,\n  \"fechaInicio\": \"2026-11-05\",\n  \"fechaFin\": \"2026-11-10\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/prestamos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prestamos"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": 15,\n  \"estudianteId\": 1,\n  \"equipoId\": 5,\n  \"estado\": \"pendiente\",\n  \"fechaInicio\": \"2026-11-05\",\n  \"fechaFin\": \"2026-11-10\",\n  \"renovaciones\": 0\n}"
+            },
+            {
+              "name": "Datos invalidos",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"estudianteId\": 1,\n  \"equipoId\": 5,\n  \"fechaInicio\": \"2026-11-05\",\n  \"fechaFin\": \"2026-11-10\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/prestamos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prestamos"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Estudiante o equipo inexistente",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"estudianteId\": 1,\n  \"equipoId\": 5,\n  \"fechaInicio\": \"2026-11-05\",\n  \"fechaFin\": \"2026-11-10\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/prestamos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prestamos"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Equipo no disponible",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"estudianteId\": 1,\n  \"equipoId\": 5,\n  \"fechaInicio\": \"2026-11-05\",\n  \"fechaFin\": \"2026-11-10\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/prestamos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prestamos"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"type\": \"https://laboratorio.edu/errors/equipo-no-disponible\",\n  \"title\": \"Equipo no disponible\",\n  \"status\": 409,\n  \"detail\": \"El equipo 5 ya esta prestado.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "multas",
+      "item": [
+        {
+          "name": "Consultar multas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/multas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "multas"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Lista de multas",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/multas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "multas"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 2523,\n    \"prestamoId\": 7318,\n    \"valor\": 9245.911318543996,\n    \"motivo\": \"Devolucion tardia\",\n    \"estado\": \"pendiente\"\n  },\n  {\n    \"id\": 8165,\n    \"prestamoId\": 7732,\n    \"valor\": 2264.6172017616627,\n    \"motivo\": \"Devolucion tardia\",\n    \"estado\": \"pagada\"\n  }\n]"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api/v1"
+    }
+  ]
+}
