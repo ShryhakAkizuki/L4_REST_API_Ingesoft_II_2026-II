@@ -43,8 +43,7 @@
         "header": [
           {
             "key": "X-Equipo",
-            "value": "Equipo1",
-            "type": "text"
+            "value": "Equipo2"
           }
         ],
         "url": {
