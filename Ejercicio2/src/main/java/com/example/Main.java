@@ -11,31 +11,33 @@ public class Main {
         PaisRepository paisRepository = new RestCountriesPaisRepository();
         ClimaRepository climaRepository = new OpenMeteoClimaRepository();
 
+        Pais pais;
+        Clima clima;
+
         try {
             // Buscar el país
-            Pais pais = paisRepository.buscar(nombrePais);
-            //System.out.println(pais);
+            pais = paisRepository.buscar(nombrePais);
 
             // Consultar el clima usando las coordenadas de su capital
-            Clima clima = climaRepository.actual(
+            clima = climaRepository.actual(
                 pais.lat(),
                 pais.lon()
-            );
-            //System.out.println(clima);
-
-            // Imprimir resultado
-            System.out.printf(
-                Locale.forLanguageTag("es-CO"),
-                "%s (Capital %s, %,d hab.): %.1f °C, viento %.1f km/h%n",
-                pais.nombre(),
-                pais.capital(),
-                pais.poblacion(),
-                clima.temperatura(),
-                clima.viento()
             );
 
         } catch (PaisNoDisponible | ClimaNoDisponible e) {
             System.out.println("Error: " + e.getMessage());
+            return;
         }
+
+        // Imprimir resultado
+        System.out.printf(
+            Locale.forLanguageTag("es-CO"),
+            "%s (Capital: %s, %,d hab.): %.1f °C, viento %.1f km/h%n",
+            pais.nombre(),
+            pais.capital(),
+            pais.poblacion(),
+            clima.temperatura(),
+            clima.viento()
+        );
     }
 }
